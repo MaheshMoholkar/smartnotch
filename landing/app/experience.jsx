@@ -64,12 +64,16 @@ export function PageMotion() {
 export function ProductDemo({ workspace, onWorkspaceChange, compact = false }) {
   const [localMode, setLocalMode] = useState('Read');
   const mode = workspace ?? localMode;
+  const previousMode = useRef(mode);
   const previewId = useId();
   const workspaceId = `${previewId}-workspace`;
   const [playing, setPlaying] = useState(false);
   const [word, setWord] = useState(0);
-  const [pinned, setPinned] = useState(true);
-  const [expanded, setExpanded] = useState(true);
+  const [pinned, setPinned] = useState(false);
+  const [expanded, setExpanded] = useState(false);
+  const [showHoverHint, setShowHoverHint] = useState(true);
+  const [hintVisible, setHintVisible] = useState(false);
+  const desktop = useRef(null);
   const [card, setCard] = useState(0);
   const [notes, setNotes] = useState('A good opening.\nOne clear idea.\nSomething worth remembering.');
   const words = 'Your next great story starts with one clear idea. Take a breath. Look up. Make it yours.'.split(' ');
@@ -79,8 +83,23 @@ export function ProductDemo({ workspace, onWorkspaceChange, compact = false }) {
     ['The takeaway', 'Leave your audience with something they can use.'],
   ];
   useEffect(() => {
+    if (!('IntersectionObserver' in window)) { setHintVisible(true); return; }
+    const observer = new IntersectionObserver(([entry]) => {
+      if (entry.isIntersecting) {
+        setHintVisible(true);
+        observer.disconnect();
+      }
+    }, { threshold: 0.5 });
+    observer.observe(desktop.current);
+    return () => observer.disconnect();
+  }, []);
+  useEffect(() => {
     setPlaying(false);
-    setExpanded(true);
+    if (previousMode.current !== mode) {
+      previousMode.current = mode;
+      setExpanded(true);
+      setShowHoverHint(false);
+    }
   }, [mode]);
   useEffect(() => {
     if (!playing || mode !== 'Read' || !expanded) return;
@@ -93,13 +112,18 @@ export function ProductDemo({ workspace, onWorkspaceChange, compact = false }) {
     onWorkspaceChange?.(value);
     setPlaying(false);
   }
+  function openPreview() {
+    setShowHoverHint(false);
+    setExpanded(true);
+  }
   return (
     <div className={`demo-area${compact ? ' workspace-demo' : ''}`} data-reveal={!compact ? true : undefined}>
       <div className="desktop-frame">
-        <div className="desktop-screen">
+        <div className="desktop-screen" ref={desktop}>
           <div className="wallpaper" aria-hidden="true"><div className="dune dune-one" /><div className="dune dune-two" /><div className="dune dune-three" /><div className="wallpaper-grain" /></div>
           <div className="desktop-menubar" aria-hidden="true"><span className="desktop-app-name"><img src="/assets/icon.png" alt="" /> SmartNotch <span>File</span><span>Edit</span><span>Window</span></span><span className="desktop-time">Sat 9:41</span></div>
-          <button className={`camera-notch ${expanded ? 'is-open' : ''}`} onMouseEnter={() => setExpanded(true)} onClick={() => setExpanded(value => !value)} aria-label={expanded ? 'Collapse interactive preview' : 'Open interactive preview'} aria-expanded={expanded}><span /></button>
+          <button className={`camera-notch ${expanded ? 'is-open' : ''}`} onMouseEnter={openPreview} onClick={() => { setShowHoverHint(false); setExpanded(value => !value); }} aria-label={expanded ? 'Collapse interactive preview' : 'Open interactive preview'} aria-expanded={expanded}><span /></button>
+          {showHoverHint && hintVisible && !expanded && <div className="demo-hover-hint" aria-hidden="true"><Icon name="cursor" size={28} /></div>}
           <div className={`demo-panel ${expanded ? '' : 'is-collapsed'}`} onMouseLeave={() => { if (!pinned) { setExpanded(false); setPlaying(false); } }} inert={!expanded ? true : undefined}>
             <div className="demo-toolbar">
               <div className="demo-brand"><img src="/assets/icon.png" alt="" /><span>SmartNotch</span></div>
@@ -123,11 +147,10 @@ export function ProductDemo({ workspace, onWorkspaceChange, compact = false }) {
               <span className="demo-grip" aria-hidden="true" />
             </div>
           </div>
-          {!expanded && <button className="demo-reopen" onClick={() => setExpanded(true)}>Open SmartNotch <Icon name="cursor" size={16} /></button>}
           {!compact && <><div className="desktop-note" aria-hidden="true"><span>SPACE TO THINK.</span><p>Nothing between<br />you and your story.</p></div><div className="desktop-bottom-label"><Icon name="monitor" size={15} /><span>Right under your camera. Right where you need it.</span></div></>}
         </div>
       </div>
-      {!compact && <div className="demo-caption"><span><Icon name="cursor" size={15} /> Go ahead. Try the tabs and press play.</span><span>Interactive preview · Desktop app</span></div>}
+      {!compact && <div className="demo-caption"><span><Icon name="cursor" size={15} /> Hover over the camera to try SmartNotch.</span><span>Interactive preview · Desktop app</span></div>}
     </div>
   );
 }

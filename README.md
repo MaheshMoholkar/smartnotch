@@ -105,3 +105,7 @@ Run `./scripts/package-windows.sh` to cross-build the Windows x64 installer from
 See [UPDATES.md](UPDATES.md) for dependency downloads, Keychain signing-key setup, packaging, publication, and an end-to-end verification checklist. Existing 0.1.0 installations require one manual install of an updater-enabled release.
 
 `SMARTNOTCH_SESSION_PATH` optionally selects a separate local session for development checks. Isolated development sessions keep the editor open so pointer automation can inspect it; normal sessions retain the editor's existing hide-on-mouse-leave behavior.
+
+## Product film
+
+The existing 20-second product ad lives in `video/`. Its sequence, captions, cut timing, and original soundtrack are retained; recorded footage is replaced with animated app mockups. Run `npm --prefix video run preview` to review it, or `npm --prefix video run studio` to edit the Remotion timeline. See [video/README.md](video/README.md) for the storyboard and export commands. Video source and generated bundles stay outside the Vercel `landing/` project.

@@ -1,0 +1,63 @@
+import React from 'react';
+import {AbsoluteFill,Sequence,Interactive,Img,staticFile,useCurrentFrame,useVideoConfig,interpolate,Easing} from 'remotion';
+import {Video} from '@remotion/media';
+const e=Easing.bezier(.22,1,.36,1);
+const opts={extrapolateLeft:'clamp',extrapolateRight:'clamp',easing:e} as const;
+
+const Reveal=({children,mark}:{children:string;mark?:string})=>{
+ const f=useCurrentFrame();
+ return <span>{children.split(' ').map((w,i)=><span key={i} style={{display:'inline-block',marginRight:13,opacity:interpolate(f,[i*2,i*2+8],[0,1],opts),filter:`blur(${interpolate(f,[i*2,i*2+10],[9,0],opts)}px)`,translate:`0 ${interpolate(f,[i*2,i*2+10],[7,0],opts)}px`,background:w===mark?'#ddf4ef':undefined,borderRadius:7,padding:w===mark?'0 6px':undefined}}>{w}</span>)}</span>;
+};
+const Statement=({children,mark}:{children:string;mark?:string})=><AbsoluteFill style={{alignItems:'center',justifyContent:'center'}}><Interactive.Div name="Statement" style={{fontSize:62,fontWeight:500,letterSpacing:-1.9,textAlign:'center'}}><Reveal mark={mark}>{children}</Reveal></Interactive.Div></AbsoluteFill>;
+const Line=({children}:{children:React.ReactNode})=>{
+ const f=useCurrentFrame();
+ return <Interactive.Div name="Benefit caption" style={{position:'absolute',bottom:107,left:120,right:120,textAlign:'center',fontSize:35,fontWeight:500,letterSpacing:-1,opacity:interpolate(f,[4,14],[0,1],opts),filter:`blur(${interpolate(f,[3,13],[5,0],opts)}px)`}}>{children}</Interactive.Div>;
+};
+const Camera=({children,start=.7,end=.9,y=0,endY=0,focus=1470,width=1440,height=740,top=110}:{children:React.ReactNode;start?:number;end?:number;y?:number;endY?:number;focus?:number;width?:number;height?:number;top?:number})=>{
+ const f=useCurrentFrame(); const scale=interpolate(f,[0,14,66],[start,start,end],opts);
+ return <div style={{position:'absolute',left:(1920-width)/2,top,width,height,borderRadius:24,overflow:'hidden',boxShadow:'0 20px 55px #1b30401a',opacity:interpolate(f,[0,5],[0,1],opts),filter:`blur(${interpolate(f,[0,7],[6,0],opts)}px)`}}><div style={{position:'absolute',left:width/2-focus*scale,top:interpolate(f,[0,66],[y,endY],opts),width:2940,height:1912,scale,transformOrigin:'0 0'}}>{children}</div></div>;
+};
+const HoverShot=()=>{
+ const {fps}=useVideoConfig();
+ return <><Camera start={.5} end={.86}><Video name="Real compact hover reveal" src={staticFile('v2/01-hover-reveal-clean-v3.mp4')} trimBefore={.55*fps} playbackRate={1.1} muted style={{width:2940,height:1912}}/></Camera><Line>Hover over the notch. Your script is <span style={{background:'#ddf4ef',borderRadius:6,padding:'0 6px'}}>right there.</span></Line></>;
+};
+const ReadShot=()=>{
+ const {fps}=useVideoConfig();
+ return <><Camera start={1} end={1.04} height={620} top={170} y={-18} endY={-30}><Video name="Compact script follows playback" src={staticFile('v2/02-teleprompter-playback.mp4')} trimBefore={6*fps} playbackRate={1.35} muted style={{width:2940,height:1912}}/></Camera><Line>Keep your words <span style={{background:'#ddf4ef',borderRadius:6,padding:'0 6px'}}>near the camera.</span></Line></>;
+};
+const CardShot=()=>{
+ const {fps}=useVideoConfig();
+ return <><Camera start={.83} end={.98} height={740}><Video name="Podcast question changes" src={staticFile('v2/03-question-cards.mp4')} trimBefore={6*fps} playbackRate={1.5} muted style={{width:2940,height:1912}}/></Camera><Line>For podcasts. Interviews. <span style={{background:'#ddf4ef',borderRadius:6,padding:'0 6px'}}>The next question.</span></Line></>;
+};
+const NoteShot=()=>{
+ const {fps}=useVideoConfig();
+ return <><Camera start={.50} end={.62} height={740} top={110}><Video name="Meeting action typed and saved" src={staticFile('v2/04-meeting-note-entry.mp4')} trimBefore={4*fps} playbackRate={2.7} muted style={{width:2940,height:1912}}/></Camera><Line>Catch the action item. <span style={{background:'#ddf4ef',borderRadius:6,padding:'0 6px'}}>Keep going.</span></Line></>;
+};
+const Tile=({children}:{children:React.ReactNode})=><div style={{width:730,height:440,borderRadius:17,overflow:'hidden',position:'relative',background:'#15232b',boxShadow:'0 9px 25px #10233418'}}><div style={{position:'absolute',width:2940,height:1912,scale:.53,transformOrigin:'0 0',left:-414,top:0}}>{children}</div></div>;
+const Montage=()=>{
+ const f=useCurrentFrame();const {fps}=useVideoConfig();
+ return <><div style={{position:'absolute',left:-150,top:-200,width:2240,display:'grid',gridTemplateColumns:'repeat(3,730px)',gap:24,rotate:'0deg',translate:`${interpolate(f,[0,78],[160,-100],opts)}px ${interpolate(f,[0,78],[90,-30],opts)}px`,opacity:interpolate(f,[0,9],[0,1],opts)}}>
+ <Tile><Video name="Montage read" src={staticFile('v2/02-teleprompter-playback.mp4')} trimBefore={5*fps} muted style={{width:2940,height:1912}}/></Tile>
+ <Tile><Video name="Montage cards" src={staticFile('v2/03-question-cards.mp4')} trimBefore={8*fps} muted style={{width:2940,height:1912}}/></Tile>
+ <Tile><Video name="Montage notes" src={staticFile('v2/04-meeting-note-entry.mp4')} trimBefore={10*fps} muted style={{width:2940,height:1912}}/></Tile>
+ <Tile><Video name="Montage pin" src={staticFile('v2/06-pin-and-leave.mp4')} trimBefore={8*fps} muted style={{width:2940,height:1912}}/></Tile>
+ <Tile><Video name="Montage three modes" src={staticFile('v2/05-section-switching.mp4')} trimBefore={18*fps} muted style={{width:2940,height:1912}}/></Tile>
+ <Tile><Video name="Montage idea" src={staticFile('v2/02-teleprompter-playback.mp4')} trimBefore={8*fps} muted style={{width:2940,height:1912}}/></Tile>
+ </div><div style={{position:'absolute',inset:0,background:'linear-gradient(to bottom,transparent 45%,#fff 87%)'}}/><Line>Scripts, questions, notes. <span style={{background:'#ddf4ef',borderRadius:6,padding:'0 6px'}}>All in your notch.</span></Line></>;
+};
+const Close=()=>{
+ const f=useCurrentFrame();
+ return <AbsoluteFill style={{alignItems:'center',justifyContent:'center'}}><Img name="SmartNotch app icon" src={staticFile('smartnotch-notch-cue.png')} style={{width:112,height:112,opacity:interpolate(f,[0,12],[0,1],opts),translate:interpolate(f,[0,18],['0px 12px','0px 0px'],opts)}}/><Interactive.Div name="SmartNotch" style={{fontSize:68,fontWeight:600,letterSpacing:-2.5,marginTop:28}}><Reveal>SmartNotch</Reveal></Interactive.Div><Interactive.Div name="Read Cards Notes" style={{fontSize:30,color:'#6b7377',marginTop:14,opacity:interpolate(f,[8,18],[0,1],opts)}}>Read. Cards. Notes.</Interactive.Div><Interactive.Div name="Free no subscription" style={{fontSize:32,marginTop:32,opacity:interpolate(f,[18,30],[0,1],opts)}}>Free. No subscription.</Interactive.Div></AbsoluteFill>;
+};
+export const Revision4=()=>{
+ return <AbsoluteFill style={{background:'#fff',fontFamily:'Arial, sans-serif',color:'#17191c'}}>
+ <Sequence name="01 · Hover first" durationInFrames={100}><HoverShot/></Sequence>
+ <Sequence name="02 · The notch" from={100} durationInFrames={74}><Statement mark="notch.">A cue from your notch.</Statement></Sequence>
+ <Sequence name="04 · Stay near the lens" from={174} durationInFrames={66}><ReadShot/></Sequence>
+ <Sequence name="05 · Conversation beat" from={240} durationInFrames={27}><Statement mark="next?">What will you ask next?</Statement></Sequence>
+ <Sequence name="06 · Next question" from={267} durationInFrames={90}><CardShot/></Sequence>
+ <Sequence name="07 · Capture a thought" from={357} durationInFrames={84}><NoteShot/></Sequence>
+ <Sequence name="08 · Everyday moments montage" from={441} durationInFrames={78}><Montage/></Sequence>
+ <Sequence name="09 · SmartNotch free" from={519} durationInFrames={81}><Close/></Sequence>
+ </AbsoluteFill>;
+};
