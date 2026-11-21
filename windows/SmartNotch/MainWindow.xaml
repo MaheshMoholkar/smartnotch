@@ -1,0 +1,5 @@
+<Window x:Class="SmartNotch.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="SmartNotch" Icon="SmartNotchLogo.png" Width="880" Height="630"
+        MinWidth="620" MinHeight="480" WindowStartupLocation="CenterScreen" />

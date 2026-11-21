@@ -1,0 +1,59 @@
+name: SmartNotch Linux
+
+on:
+  workflow_dispatch:
+  push:
+    paths: ['linux/**', 'scripts/package_linux.py', 'scripts/release_assets.py', 'scripts/release_config.py', 'release.json', 'RELEASE_NOTES.md', '.github/workflows/linux.yml']
+  pull_request:
+    paths: ['linux/**', 'scripts/package_linux.py', 'scripts/release_assets.py', 'scripts/release_config.py', 'release.json', 'RELEASE_NOTES.md', '.github/workflows/linux.yml']
+
+permissions:
+  contents: read
+
+jobs:
+  linux-build:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+      - name: Install Qt runtime and test display
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y xvfb libegl1 libgl1 libxkbcommon-x11-0 libxcb-cursor0 libxcb-icccm4 libxcb-keysyms1 libxcb-shape0 libxcb-xinerama0 libxcb-render-util0
+          python -m pip install -r linux/requirements.txt
+          python -m pip install pyinstaller==6.16.0
+      - name: Test workspace and GUI
+        run: xvfb-run -a python -m unittest discover -s linux/tests -v
+      - name: Package source installer
+        run: python scripts/package_linux.py
+      - name: Build Linux x64 portable executable
+        run: |
+          python -m PyInstaller --noconfirm --clean --name SmartNotch --paths linux --distpath dist/native --workpath dist/pyinstaller --specpath dist --add-data linux/icon.png:. linux/launch.py
+          cp linux/README.md dist/native/SmartNotch/README.md
+          python - <<'PY'
+          import importlib.metadata
+          import shutil
+          from pathlib import Path
+          target = Path('dist/native/SmartNotch/third-party-licenses')
+          for name in ('PySide6-Essentials', 'shiboken6', 'pyinstaller'):
+              distribution = importlib.metadata.distribution(name)
+              for entry in distribution.files or []:
+                  if 'license' in str(entry).lower() or 'copying' in str(entry).lower():
+                      source = Path(distribution.locate_file(entry))
+                      if source.is_file():
+                          destination = target / name / str(entry).replace('..', '_')
+                          destination.parent.mkdir(parents=True, exist_ok=True)
+                          shutil.copy2(source, destination)
+          PY
+          tar -czf dist/linux/SmartNotch-Linux-x64-portable.tar.gz -C dist/native SmartNotch
+          cd dist/linux
+          sha256sum SmartNotch-Linux-x64-portable.tar.gz > SmartNotch-Linux-x64-portable.tar.gz.sha256
+      - uses: actions/upload-artifact@v4
+        with:
+          name: SmartNotch-Linux-preview
+          path: |
+            dist/linux/*
+            dist/github-release/**
+          if-no-files-found: error

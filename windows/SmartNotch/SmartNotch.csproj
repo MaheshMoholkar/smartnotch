@@ -1,0 +1,25 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net10.0-windows</TargetFramework>
+    <EnableWindowsTargeting>true</EnableWindowsTargeting>
+    <UseWPF>true</UseWPF>
+    <UseWindowsForms>true</UseWindowsForms>
+    <Nullable>enable</Nullable>
+    <StartupObject>SmartNotch.App</StartupObject>
+    <ApplicationIcon>SmartNotch.ico</ApplicationIcon>
+    <ApplicationManifest>app.manifest</ApplicationManifest>
+  </PropertyGroup>
+  <PropertyGroup>
+    <_ReleaseJson>$([System.IO.File]::ReadAllText('$(MSBuildThisFileDirectory)../../release.json'))</_ReleaseJson>
+    <Version>$([System.Text.RegularExpressions.Regex]::Match('$(_ReleaseJson)', '&quot;version&quot;\s*:\s*&quot;([^&quot;]+)&quot;').Groups[1].Value)</Version>
+  </PropertyGroup>
+  <ItemGroup>
+    <ApplicationDefinition Remove="App.xaml" />
+    <Page Include="App.xaml" />
+    <PackageReference Include="Velopack" Version="1.2.161" />
+    <EmbeddedResource Include="../../release.json" LogicalName="SmartNotch.release.json" />
+    <Resource Include="SmartNotch.ico" />
+    <Resource Include="../../Assets/SmartNotchLogo.png" Link="SmartNotchLogo.png" />
+  </ItemGroup>
+</Project>

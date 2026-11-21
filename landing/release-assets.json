@@ -1,0 +1,45 @@
+{
+  "releases": {},
+  "routes": {
+    "/updates/mac/SmartNotch-0.2.0.dmg": {
+      "version": "0.2.0",
+      "asset": "SmartNotch-0.2.0.dmg",
+      "sha256": "509575e26292a480f3f60ed8addf50c2c0b88fd8d4b414902c5a0275c5767d2e"
+    },
+    "/assets/SmartNotch.dmg": {
+      "version": "0.2.0",
+      "asset": "SmartNotch.dmg",
+      "sha256": "509575e26292a480f3f60ed8addf50c2c0b88fd8d4b414902c5a0275c5767d2e"
+    },
+    "/updates/windows/win-x64/SmartNotch-0.2.0-full.nupkg": {
+      "version": "0.2.0",
+      "asset": "SmartNotch-0.2.0-full.nupkg",
+      "sha256": "95ccc6712bb44112ca9a39812afea7b2653afb5d05faab90e8a6afbf165adfad"
+    },
+    "/updates/windows/win-x64/SmartNotch-win-Setup.exe": {
+      "version": "0.2.0",
+      "asset": "SmartNotch-Windows-x64-Setup.exe",
+      "sha256": "4b0bd22a89fc8857dc0861fe3e6082724cad1f0c38244ee8fc70229b3dda022e"
+    },
+    "/assets/SmartNotch-Windows-x64-Setup.exe": {
+      "version": "0.2.0",
+      "asset": "SmartNotch-Windows-x64-Setup.exe",
+      "sha256": "4b0bd22a89fc8857dc0861fe3e6082724cad1f0c38244ee8fc70229b3dda022e"
+    },
+    "/assets/SmartNotch-Linux.tar.gz": {
+      "version": "0.2.0",
+      "asset": "SmartNotch-Linux.tar.gz",
+      "sha256": "531f0134568d9dd226484c7f7ab36dae98855ea9285fc814bdb3b29774282f22"
+    },
+    "/assets/SmartNotch-Windows-x64.zip": {
+      "version": "0.2.0",
+      "asset": "SmartNotch-Windows-x64.zip",
+      "sha256": "021890cb79108ce0a4a2d99966f9f50c0fd07bcba40a2599dce48a2b2b1778e4"
+    },
+    "/assets/SmartNotch.zip": {
+      "version": "0.2.0",
+      "asset": "SmartNotch.zip",
+      "sha256": "19370fd442eced7376ce995c0f6405c159add9b2f1b44be60f75c08213f917c7"
+    }
+  }
+}

@@ -1,0 +1,82 @@
+# macOS and editor state
+.DS_Store
+._*
+.idea/
+.vscode/
+.openai/
+.codex/
+.agents/
+*.swp
+*.swo
+*.xcuserstate
+xcuserdata/
+
+# Swift build output (keep Package.resolved)
+.build/
+.swiftpm/
+DerivedData/
+*.app/
+*.dSYM/
+
+# Website dependencies, builds, and deployment state (keep lockfiles)
+node_modules/
+.next/
+out/
+dist/
+.vercel/
+.turbo/
+coverage/
+*.tsbuildinfo
+*.log
+
+# .NET build output and local package caches
+bin/
+obj/
+.vs/
+.packages/
+*.user
+*.suo
+*.pdb
+
+# Python environments and caches
+.venv/
+venv/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+*.egg-info/
+*.spec
+
+# Installers, release packages, and archived project copies belong in Releases
+*.dmg
+*.exe
+*.msi
+*.msix
+*.pkg
+*.nupkg
+*.snupkg
+*.AppImage
+*.deb
+*.rpm
+*.zip
+*.tar
+*.tar.gz
+*.tgz
+*.7z
+
+# Local configuration and signing credentials
+.env
+.env.*
+!.env.example
+!.env.sample
+!.env.template
+!.env.*.example
+.aws/
+.ssh/
+*.key
+*.pem
+*.p12
+*.pfx
+*.mobileprovision

@@ -1,0 +1,29 @@
+{
+  "mac": {
+    "label": "Mac",
+    "system": "macOS 14.0 or later",
+    "architecture": "Apple silicon (ARM64)",
+    "format": "DMG",
+    "file": "/assets/SmartNotch.dmg",
+    "version": "0.2.0",
+    "inAppUpdates": true
+  },
+  "windows": {
+    "label": "Windows",
+    "system": "Windows 10/11",
+    "architecture": "64-bit Intel or AMD (x64)",
+    "format": "EXE",
+    "file": "/assets/SmartNotch-Windows-x64-Setup.exe",
+    "version": "0.2.0",
+    "inAppUpdates": true
+  },
+  "linux": {
+    "label": "Linux",
+    "system": "Linux preview · X11 recommended",
+    "architecture": "x64 / ARM64 · Python 3.10–3.14",
+    "format": "TAR.GZ installer",
+    "file": "/assets/SmartNotch-Linux.tar.gz",
+    "version": "0.2.0",
+    "inAppUpdates": false
+  }
+}

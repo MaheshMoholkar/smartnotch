@@ -1,0 +1,23 @@
+<?xml version='1.0' encoding='utf-8'?>
+<rss xmlns:sparkle="http://www.andymatuschak.org/xml-namespaces/sparkle" version="2.0">
+  <channel>
+    <title>SmartNotch Updates</title>
+    <item>
+      <title>SmartNotch 0.2.0</title>
+      <pubDate>Sat, 21 Nov 2026 04:34:39 +0000</pubDate>
+      <sparkle:version>2</sparkle:version>
+      <sparkle:shortVersionString>0.2.0</sparkle:shortVersionString>
+      <sparkle:minimumSystemVersion>14.0.0</sparkle:minimumSystemVersion>
+      <sparkle:hardwareRequirements>arm64</sparkle:hardwareRequirements>
+      <description sparkle:format="markdown"># SmartNotch 0.2.0
+
+- Check for updates from SmartNotch’s menu on Mac or the editor and notification area on Windows.
+- Receive periodic update checks, with an option to turn them off.
+- See an Update available button beside the floating panel controls when a newer version is detected.
+- Download updates in the app and choose when to install and restart.
+- Keep scripts, cards, notes, reading position, and settings between updates.
+</description>
+      <enclosure sparkle:edSignature="/rAVIYLFyp4L+NZtLgbyKpH11vJI6NJw4+TWPbRffi/wp27otXzb+bQpAwi77Hv3N7rnozx28J5NaWukzDsXDw==" length="1824485" url="https://smartnotch.vercel.app/updates/mac/SmartNotch-0.2.0.dmg" type="application/octet-stream" />
+    </item>
+  </channel>
+</rss>
