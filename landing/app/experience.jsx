@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useId, useRef, useState } from 'react';
 import Icon from './icons';
 
 const modes = {
@@ -8,24 +8,18 @@ const modes = {
     icon: 'read',
     title: 'Find your flow.',
     description: 'Keep your script close to the lens. Set your pace, jump to any word, or let voice follow keep up with you on Mac.',
-    image: '/assets/read-preview.jpg',
-    alt: 'The SmartNotch teleprompter showing an active word and playback controls below the Mac camera notch',
     chips: ['Auto-scroll & manual', 'Saved reading position', 'Voice follow on Mac'],
   },
   Cards: {
     icon: 'cards',
     title: 'Leave room for the unexpected.',
     description: 'A little structure, without a word-for-word script. Keep talking points in a deck, add context, and check them off as you go.',
-    image: '/assets/cards-preview.jpg',
-    alt: 'SmartNotch cue cards with a question, notes, and navigation between cards',
     chips: ['Multiple decks', 'Card notes', 'Completion tracking'],
   },
   Notes: {
     icon: 'note',
     title: 'Keep the good stuff close.',
     description: 'A thought, a name, a detail you can’t forget. Keep notes for every meeting or recording, then edit them right in the panel.',
-    image: '/assets/notes-preview.jpg',
-    alt: 'SmartNotch Notes mode with meeting notes in the floating panel',
     chips: ['Independent notes', 'Edit in the panel', 'Automatic local saving'],
   },
 };
@@ -67,8 +61,11 @@ export function PageMotion() {
   return null;
 }
 
-export function ProductDemo() {
-  const [mode, setMode] = useState('Read');
+export function ProductDemo({ workspace, onWorkspaceChange, compact = false }) {
+  const [localMode, setLocalMode] = useState('Read');
+  const mode = workspace ?? localMode;
+  const previewId = useId();
+  const workspaceId = `${previewId}-workspace`;
   const [playing, setPlaying] = useState(false);
   const [word, setWord] = useState(0);
   const [pinned, setPinned] = useState(true);
@@ -82,14 +79,22 @@ export function ProductDemo() {
     ['The takeaway', 'Leave your audience with something they can use.'],
   ];
   useEffect(() => {
+    setPlaying(false);
+    setExpanded(true);
+  }, [mode]);
+  useEffect(() => {
     if (!playing || mode !== 'Read' || !expanded) return;
     if (word >= words.length - 1) { setPlaying(false); return; }
     const timer = setTimeout(() => setWord(value => value + 1), 275);
     return () => clearTimeout(timer);
   }, [playing, mode, expanded, words.length, word]);
-  function switchMode(value) { setMode(value); setPlaying(false); }
+  function switchMode(value) {
+    setLocalMode(value);
+    onWorkspaceChange?.(value);
+    setPlaying(false);
+  }
   return (
-    <div className="demo-area" data-reveal>
+    <div className={`demo-area${compact ? ' workspace-demo' : ''}`} data-reveal={!compact ? true : undefined}>
       <div className="desktop-frame">
         <div className="desktop-screen">
           <div className="wallpaper" aria-hidden="true"><div className="dune dune-one" /><div className="dune dune-two" /><div className="dune dune-three" /><div className="wallpaper-grain" /></div>
@@ -99,11 +104,11 @@ export function ProductDemo() {
             <div className="demo-toolbar">
               <div className="demo-brand"><img src="/assets/icon.png" alt="" /><span>SmartNotch</span></div>
               <div className="demo-tabs" role="tablist" aria-label="Try a workspace" onKeyDown={event => navigateTabs(event, mode, switchMode)}>
-                {Object.keys(modes).map(item => <button key={item} role="tab" tabIndex={mode === item ? 0 : -1} aria-selected={mode === item} aria-controls="demo-workspace" id={`demo-tab-${item}`} onClick={() => switchMode(item)}>{item}</button>)}
+                {Object.keys(modes).map(item => <button key={item} role="tab" tabIndex={mode === item ? 0 : -1} aria-selected={mode === item} aria-controls={workspaceId} id={`${previewId}-tab-${item}`} onClick={() => switchMode(item)}>{item}</button>)}
               </div>
               <div className="demo-window-actions"><button className={pinned ? 'is-pinned' : ''} onClick={() => setPinned(value => !value)} aria-label={pinned ? 'Unpin demo panel' : 'Pin demo panel'} aria-pressed={pinned}><Icon name="pin" size={16} /></button><button onClick={() => { setExpanded(false); setPlaying(false); }} aria-label="Close demo panel"><Icon name="close" size={17} /></button></div>
             </div>
-            <div className={`demo-content demo-content-${mode.toLowerCase()}`} id="demo-workspace" role="tabpanel" aria-labelledby={`demo-tab-${mode}`}>
+            <div className={`demo-content demo-content-${mode.toLowerCase()}`} id={workspaceId} role="tabpanel" aria-labelledby={`${previewId}-tab-${mode}`}>
               {mode === 'Read' && <p>{words.map((text, index) => <button key={index} className={word === index ? 'current-word' : ''} onClick={() => setWord(index)} aria-label={`Read from ${text}`}>{text}</button>)}</p>}
               {mode === 'Cards' && <div className="demo-card" key={card}><span className="demo-card-index">TALKING POINT {card + 1} / 3</span><h3>{cards[card][0]}</h3><p>{cards[card][1]}</p></div>}
               {mode === 'Notes' && <textarea value={notes} onChange={event => setNotes(event.target.value)} aria-label="Try editing a note" spellCheck="false" />}
@@ -119,11 +124,10 @@ export function ProductDemo() {
             </div>
           </div>
           {!expanded && <button className="demo-reopen" onClick={() => setExpanded(true)}>Open SmartNotch <Icon name="cursor" size={16} /></button>}
-          <div className="desktop-note" aria-hidden="true"><span>SPACE TO THINK.</span><p>Nothing between<br />you and your story.</p></div>
-          <div className="desktop-bottom-label"><Icon name="monitor" size={15} /><span>Right under your camera. Right where you need it.</span></div>
+          {!compact && <><div className="desktop-note" aria-hidden="true"><span>SPACE TO THINK.</span><p>Nothing between<br />you and your story.</p></div><div className="desktop-bottom-label"><Icon name="monitor" size={15} /><span>Right under your camera. Right where you need it.</span></div></>}
         </div>
       </div>
-      <div className="demo-caption"><span><Icon name="cursor" size={15} /> Go ahead. Try the tabs and press play.</span><span>Interactive preview · Desktop app</span></div>
+      {!compact && <div className="demo-caption"><span><Icon name="cursor" size={15} /> Go ahead. Try the tabs and press play.</span><span>Interactive preview · Desktop app</span></div>}
     </div>
   );
 }
@@ -137,7 +141,7 @@ export function WorkspaceExplorer() {
         {Object.entries(modes).map(([name, mode]) => <button key={name} role="tab" tabIndex={active === name ? 0 : -1} id={`workspace-tab-${name}`} aria-selected={active === name} aria-controls="workspace-preview" onClick={() => setActive(name)}><span className="workspace-tab-icon"><Icon name={mode.icon} size={22} /></span><span><strong>{name}</strong><span>{name === 'Read' ? 'For the words you want to get right.' : name === 'Cards' ? 'For a little direction, not a script.' : 'For the details worth keeping.'}</span></span><span className="workspace-tab-indicator" /></button>)}
       </div>
       <div className="workspace-display" id="workspace-preview" role="tabpanel" aria-labelledby={`workspace-tab-${active}`}>
-        <div className={`workspace-image workspace-image-${active.toLowerCase()}`}><img key={selected.image} src={selected.image} alt={selected.alt} width="880" height={active === 'Read' ? 366 : active === 'Cards' ? 456 : 490} loading="lazy" /></div>
+        <ProductDemo workspace={active} onWorkspaceChange={setActive} compact />
         <div className="workspace-detail" key={active}><h3>{selected.title}</h3><p>{selected.description}</p><div className="feature-chips">{selected.chips.map(chip => <span key={chip}><Icon name="check" size={13} />{chip}</span>)}</div></div>
       </div>
     </div>
