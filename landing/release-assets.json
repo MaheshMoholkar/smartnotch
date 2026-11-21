@@ -1,5 +1,7 @@
 {
-  "releases": {},
+  "releases": {
+    "0.2.0": "https://github.com/MaheshMoholkar/smartnotch/releases/download/v0.2.0"
+  },
   "routes": {
     "/updates/mac/SmartNotch-0.2.0.dmg": {
       "version": "0.2.0",

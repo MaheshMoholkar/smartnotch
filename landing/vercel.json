@@ -19,5 +19,46 @@
       ]
     }
   ],
-  "redirects": []
+  "redirects": [
+    {
+      "source": "/assets/SmartNotch-Linux.tar.gz",
+      "destination": "https://github.com/MaheshMoholkar/smartnotch/releases/download/v0.2.0/SmartNotch-Linux.tar.gz",
+      "permanent": false
+    },
+    {
+      "source": "/assets/SmartNotch-Windows-x64-Setup.exe",
+      "destination": "https://github.com/MaheshMoholkar/smartnotch/releases/download/v0.2.0/SmartNotch-Windows-x64-Setup.exe",
+      "permanent": false
+    },
+    {
+      "source": "/assets/SmartNotch-Windows-x64.zip",
+      "destination": "https://github.com/MaheshMoholkar/smartnotch/releases/download/v0.2.0/SmartNotch-Windows-x64.zip",
+      "permanent": false
+    },
+    {
+      "source": "/assets/SmartNotch.dmg",
+      "destination": "https://github.com/MaheshMoholkar/smartnotch/releases/download/v0.2.0/SmartNotch.dmg",
+      "permanent": false
+    },
+    {
+      "source": "/assets/SmartNotch.zip",
+      "destination": "https://github.com/MaheshMoholkar/smartnotch/releases/download/v0.2.0/SmartNotch.zip",
+      "permanent": false
+    },
+    {
+      "source": "/updates/mac/SmartNotch-0.2.0.dmg",
+      "destination": "https://github.com/MaheshMoholkar/smartnotch/releases/download/v0.2.0/SmartNotch-0.2.0.dmg",
+      "permanent": false
+    },
+    {
+      "source": "/updates/windows/win-x64/SmartNotch-0.2.0-full.nupkg",
+      "destination": "https://github.com/MaheshMoholkar/smartnotch/releases/download/v0.2.0/SmartNotch-0.2.0-full.nupkg",
+      "permanent": false
+    },
+    {
+      "source": "/updates/windows/win-x64/SmartNotch-win-Setup.exe",
+      "destination": "https://github.com/MaheshMoholkar/smartnotch/releases/download/v0.2.0/SmartNotch-Windows-x64-Setup.exe",
+      "permanent": false
+    }
+  ]
 }
