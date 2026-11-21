@@ -84,7 +84,7 @@ export function ProductDemo() {
   useEffect(() => {
     if (!playing || mode !== 'Read' || !expanded) return;
     if (word >= words.length - 1) { setPlaying(false); return; }
-    const timer = setTimeout(() => setWord(value => value + 1), 550);
+    const timer = setTimeout(() => setWord(value => value + 1), 275);
     return () => clearTimeout(timer);
   }, [playing, mode, expanded, words.length, word]);
   function switchMode(value) { setMode(value); setPlaying(false); }

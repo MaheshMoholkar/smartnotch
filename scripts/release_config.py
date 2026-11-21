@@ -43,7 +43,7 @@ def mac_plist(config):
         CFBundleIconFile="AppIcon", CFBundlePackageType="APPL",
         CFBundleShortVersionString=config["version"], CFBundleVersion=str(config["build"]),
         LSMinimumSystemVersion="14.0", NSHighResolutionCapable=True,
-        NSHumanReadableCopyright="MaheshLabs",
+        NSHumanReadableCopyright="SmartNotch",
         NSMicrophoneUsageDescription="Follow your script as you speak. Audio is processed on this Mac.",
         NSSpeechRecognitionUsageDescription="Match your spoken words to your script using on-device recognition.",
     )

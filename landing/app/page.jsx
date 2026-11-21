@@ -38,7 +38,7 @@ export default function Home() {
         <div className="hero-halo" aria-hidden="true" />
         <div className="hero-copy section-shell">
           <a href="#features" className="release-pill"><Icon name="sparkle" size={14} /><span>A little more presence.{version ? ` Meet v${version}.` : ''}</span></a>
-          <h1 id="hero-title">Keep your eyes up.<br /><em>Your words are here.</em></h1>
+          <h1 id="hero-title">Your words.<br /><em>A glance away.</em></h1>
           <p className="hero-description">Your script, talking points, and notes. Right under your camera.<br className="desktop-only" /> A little less to think about. A lot more you.</p>
           <div className="hero-actions"><DownloadPicker /><ProductFilm compact /></div>
           <p className="hero-assurance"><Icon name="check" size={14} /> No account. No getting in your way.</p>
@@ -74,6 +74,6 @@ export default function Home() {
       <Questions />
       <section className="download-section section-shell" id="download" aria-labelledby="download-title" data-reveal><div className="download-orbit" aria-hidden="true" /><span className="final-app-icon"><img src="/assets/icon.png" width="68" height="68" alt="" /></span><p className="eyebrow">GOOD WORDS DESERVE TO BE HEARD.</p><h2 id="download-title">Your next great take.<br /><em>Starts right here.</em></h2><p>Be prepared. Stay present. Sound like you.</p><DownloadPicker /><a href="#install" className="install-link">A little help getting started</a></section>
     </main>
-    <footer className="site-footer section-shell"><div className="footer-top"><div><Brand large /><p>A little space for your next big idea.</p></div><div className="footer-links"><a href="#features">Explore SmartNotch</a><a href="#install">Installation</a><a href="#faq">Questions</a></div></div><div className="footer-bottom"><span>Made with care by MaheshLabs.</span><span>Mac, Windows &amp; Linux. Your words, your computer.</span><a href="#top">Back to the beginning</a></div></footer>
+    <footer className="site-footer section-shell"><div className="footer-top"><div><Brand large /><p>A little space for your next big idea.</p></div><div className="footer-links"><a href="#features">Explore SmartNotch</a><a href="#install">Installation</a><a href="#faq">Questions</a></div></div><div className="footer-bottom"><span>Made with care.</span><span>Mac, Windows &amp; Linux. Your words, your computer.</span><a href="#top">Back to the beginning</a></div></footer>
   </DownloadPlatformProvider>;
 }

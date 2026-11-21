@@ -158,7 +158,7 @@ nonisolated struct Chapter: Codable, Identifiable {
 }
 
 nonisolated struct SavedSession: Codable {
-    var text = "Welcome to MaheshLabs.\n\nToday, let’s make something worth sharing.\n\nKeep your eyes near the camera. Speak naturally, take a breath, and make the story your own.\n\nHover over the camera notch to open your script. Click the pin to keep it open, or press Control + Option + Space to start reading."
+    var text = "Welcome to SmartNotch.\n\nToday, let’s make something worth sharing.\n\nKeep your eyes near the camera. Speak naturally, take a breath, and make the story your own.\n\nHover over the camera notch to open your script. Click the pin to keep it open, or press Control + Option + Space to start reading."
     var speed = 150.0
     var textSize = 24.0
     var width = 580.0

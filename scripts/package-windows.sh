@@ -28,7 +28,7 @@ echo '[3/4] Packaging Setup.exe and the update files…'
     dotnet tool run vpk -- '[win]' pack --skip-updates \
         --packId SmartNotch --packVersion "$version" \
         --packDir "$publish" --mainExe SmartNotch.exe \
-        --packTitle SmartNotch --packAuthors MaheshLabs \
+        --packTitle SmartNotch --packAuthors SmartNotch \
         --runtime "$runtime" --channel win --outputDir "$output" \
         --releaseNotes "$root/RELEASE_NOTES.md" \
         --icon "$root/windows/SmartNotch/SmartNotch.ico" \

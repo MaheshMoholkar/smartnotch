@@ -29,7 +29,7 @@ try {
     try {
         dotnet tool restore
         if ($LASTEXITCODE -ne 0) { throw 'Could not restore the pinned Velopack packaging tool.' }
-        dotnet tool run vpk -- pack --packId SmartNotch --packVersion $config.version --packDir $build --mainExe SmartNotch.exe --packTitle SmartNotch --packAuthors MaheshLabs --runtime $Runtime --channel win --outputDir $output --releaseNotes (Join-Path $root 'RELEASE_NOTES.md') --icon (Join-Path $PSScriptRoot 'SmartNotch\SmartNotch.ico')
+        dotnet tool run vpk -- pack --packId SmartNotch --packVersion $config.version --packDir $build --mainExe SmartNotch.exe --packTitle SmartNotch --packAuthors SmartNotch --runtime $Runtime --channel win --outputDir $output --releaseNotes (Join-Path $root 'RELEASE_NOTES.md') --icon (Join-Path $PSScriptRoot 'SmartNotch\SmartNotch.ico')
         if ($LASTEXITCODE -ne 0) { throw 'Velopack packaging failed.' }
     } finally { Pop-Location }
     foreach ($file in (Get-ChildItem $output -File | Where-Object Extension -ne '.sha256')) {

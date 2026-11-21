@@ -196,7 +196,7 @@ struct AppearancePreview: View {
                         }
                     }
                 }
-                Text("Welcome to\nMaheshLabs.")
+                Text("Welcome to\nSmartNotch.")
                     .font(.system(size: model.textSize * 0.65, weight: .medium))
                     .foregroundStyle(Color(red: model.ink.rgb.0, green: model.ink.rgb.1, blue: model.ink.rgb.2))
                     .shadow(color: .black.opacity(model.transparency >= 50 ? 0.7 : 0), radius: 1, y: 1)

@@ -734,7 +734,7 @@ class Workspace(QMainWindow):
 def main():
     app = QApplication(sys.argv)
     app.setApplicationName("SmartNotch")
-    app.setOrganizationName("MaheshLabs")
+    app.setOrganizationName("SmartNotch")
     app.setDesktopFileName("in.maheshmoholkar.smartnotch")
     app.setStyle("Fusion")
     app.setStyleSheet(STYLE)
