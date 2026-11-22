@@ -7,23 +7,5 @@
     "file": "https://github.com/MaheshMoholkar/smartnotch/releases/download/v0.2.0/SmartNotch.dmg",
     "version": "0.2.0",
     "inAppUpdates": true
-  },
-  "windows": {
-    "label": "Windows",
-    "system": "Windows 10/11",
-    "architecture": "64-bit Intel or AMD (x64)",
-    "format": "EXE",
-    "file": "https://github.com/MaheshMoholkar/smartnotch/releases/download/v0.2.0/SmartNotch-Windows-x64-Setup.exe",
-    "version": "0.2.0",
-    "inAppUpdates": true
-  },
-  "linux": {
-    "label": "Linux",
-    "system": "Linux preview · X11 recommended",
-    "architecture": "x64 / ARM64 · Python 3.10–3.14",
-    "format": "TAR.GZ installer",
-    "file": "https://github.com/MaheshMoholkar/smartnotch/releases/download/v0.2.0/SmartNotch-Linux.tar.gz",
-    "version": "0.2.0",
-    "inAppUpdates": false
   }
 }
